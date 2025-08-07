@@ -4,22 +4,21 @@
 
 //information pour se connecter
 //l'endroit ou est ma database
-$host = "localhost";
-//le nom de la db
-$dbname = "users";
-//identifiant de connexion
-$username = "root";
-//mdp de connexion
-$password = "";
-//port
-$port = 3306;
-//encodage
-$charset = "utf8mb4";
+
 
 //fonction qui crée et renvoi une connexion a la db
 function dbConnexion() {
-    //transforme mes variable en global (accessible partout)
-    global $host, $dbname, $password, $username, $port, $charset;
+    $host = "localhost";
+//le nom de la db
+    $dbname = "users";
+    //identifiant de connexion
+    $username = "root";
+    //mdp de connexion
+    $password = "";
+    //port
+    $port = 3306;
+    //encodage
+    $charset = "utf8mb4";
 
     try {
         //mes param de co // DSN= DATA SOURCE NAME (indique à PHP comment se connecter a la base de données)
@@ -31,6 +30,7 @@ function dbConnexion() {
         //comment me renvoyer les données
         $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
+        var_dump($pdo);
         return $pdo;     // renvois $pdo pour l'utiliser ailleurs (ex: u autre fichier php)
 
     } catch (PDOException $e) {           // si une erreur se produit dans try =, on entre ici.
@@ -38,4 +38,13 @@ function dbConnexion() {
     }
 }
 //dbConnexion();// lancement de la fonction de connection pour test
+
+
+
+
+
+
+/*transforme mes variable en global (accessible partout) !!!!!(!!!! entre en conflit avec $username de registration.php)
+global $host, $dbname, $password, $username, $port, $charset;*/
+
 ?>

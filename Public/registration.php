@@ -45,6 +45,25 @@
         $errors[] = "mot de passe doivent etre identique";
     }
 }
+// TEST CO DB
+// try {
+//     $pdo = dbConnexion();  // récupère la connexion
+
+//     // Test simple : exécute une requête SELECT 1 (ne touche pas à la base)
+//     $stmt = $pdo->query("SELECT 1");
+
+//     // récupère le résultat
+//     $result = $stmt->fetch();
+
+//     if ($result) {
+//         echo "Connexion réussie !";
+//     } else {
+//         echo "Connexion OK mais pas de résultat.";
+//     }
+
+// } catch (PDOException $e) {
+//     echo "Erreur de connexion : " . $e->getMessage();
+// }
 ?>
 <!--------------------------------------------------------------------------------------------
 ------------------  HTML SECTION -------------------------------------------------------------
