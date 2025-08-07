@@ -34,37 +34,49 @@
         $errors[] = "votre adresse ne correspond au format mail classique";
     }
         
-    //validation password
+
+    
+    if (empty($errors)) {
+        //logique de traitement en db
+        $pdo = dbConnexion();
+
+        //verifier si l'adresse mail est utilisé ou non
+        $checkEmail = $pdo->prepare("SELECT id FROM users WHERE email = ?");
+
+        //la methode execute de mon objet pdo execute la request préparée
+        $checkEmail->execute([$email]);
+
+        //une condition pour vérifier si je recupere quelque chose
+        if ($checkEmail->rowCount() > 0) {
+            $errors[] = "email déja utilisé";
+        } else {
+            //dans le cas ou tout va bien ! email pas utilisé
+
+            //hashage du mdp avec la fonction password_hash
+            $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            //insertion des données en db
+            // INSERT INTO users (username, email, password)VALUES ("atif","atif@gmail.com","lijezfoifjerlkjf")
+            $insertUser = $pdo->prepare("
+            INSERT INTO users (nom, email, password) 
+            VALUES (?, ?, ?)
+            ");
+
+            $insertUser->execute([$username, $email, $hashPassword]);
+
+            $message = "super mega cool vous êtes enregistré $username";
+        }
+        // try {
+            
+        // } catch () {
+            
+        // }
+        }
+
         
-    if (empty($password)) {
-        $errors[] = "password obligatoire";
-    }elseif ( strlen($password) < 3 ) {
-        $errors[] = "password trop juste";
-        // normalement ici on met un pattern pour le mdp
-    }elseif ( $password !== $confirmPassword ) {
-        $errors[] = "mot de passe doivent etre identique";
     }
-}
-// TEST CO DB
-// try {
-//     $pdo = dbConnexion();  // récupère la connexion
-
-//     // Test simple : exécute une requête SELECT 1 (ne touche pas à la base)
-//     $stmt = $pdo->query("SELECT 1");
-
-//     // récupère le résultat
-//     $result = $stmt->fetch();
-
-//     if ($result) {
-//         echo "Connexion réussie !";
-//     } else {
-//         echo "Connexion OK mais pas de résultat.";
-//     }
-
-// } catch (PDOException $e) {
-//     echo "Erreur de connexion : " . $e->getMessage();
-// }
 ?>
+
 <!--------------------------------------------------------------------------------------------
 ------------------  HTML SECTION -------------------------------------------------------------
 --------------------------------------------------------------------------------------------->
