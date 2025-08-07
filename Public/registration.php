@@ -1,11 +1,11 @@
 <?php
     require_once "../config/database.php";
-    var_dump(dbConnexion());
+    //var_dump(dbConnexion());
     $errors = [];
     // =========================================
     // condition qui contient la logique de traitement du formulaire quand on recoit une request POST
     // ==========================================
-    if ($_SERVER["REQUEST_METHOD"] === "POST");{
+    if ($_SERVER["REQUEST_METHOD"] === "POST"){
         //recuperation des données d'un formulaire
         //nettoyage des données du formulaire
         $username = htmlspecialchars(trim($_POST["username"]));
@@ -17,7 +17,7 @@
     //validation username
     //valide que le champ soit remplis
     if (empty($username)) {
-        $error[]="nom obligatoire";
+        $errors[]="nom obligatoire";
     //valide avec la function strlen si la string est de plus de 3 carac
     }elseif (strlen($username) < 3) {
         $errors[] = "mini 3 carac";
