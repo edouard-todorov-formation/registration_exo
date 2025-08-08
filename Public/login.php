@@ -1,6 +1,8 @@
 <?php
     require_once "../config/database.php";
-
+    
+    session_start();
+    
     $errors = [];
     $message = "";
 
@@ -8,10 +10,6 @@
         $email = trim(htmlspecialchars($_POST["email"]) ?? '');
         $password = $_POST["password"] ?? '';
         
-        if(empty($password)) {
-            $errors[] = "le mdp est obligatoire";
-        }
-
         if(empty($password)) {
             $errors[] = "le mdp est obligatoire";
         }
@@ -127,7 +125,7 @@
         //logique de traitement en db
         $pdo = dbConnexion();
 
-        $passwordDb = $pdo->prepare("SELECT passwo rd FROM users WHERE password = (?)");
+        $passwordDb = $pdo->prepare("SELECT password FROM users WHERE password = (?)");
 
         $passwordDb->execute([$passwordDb]);
         var_dump($passwordDb);
